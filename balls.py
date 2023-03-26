@@ -32,6 +32,7 @@ class VerletObject(arcade.SpriteCircle):
         self.acceleration += acc
 
 
+# Todo: uncompleted link
 class Link:
     def __init__(self):
         self.objs = arcade.SpriteList()
@@ -40,12 +41,12 @@ class Link:
         self.objs.append(VerletObject(300 + RADIUS * 4, 400, arcade.color.WHITE, RADIUS))
         self.objs.append(VerletObject(300 + RADIUS * 6, 400, arcade.color.WHITE, RADIUS))
         self.objs.append(VerletObject(300 + RADIUS * 8, 400, arcade.color.WHITE, RADIUS))
-        self.target_dist = RADIUS*2+3
+        self.target_dist = RADIUS * 2 + 3
 
     def apply(self):
         for i in range(len(self.objs)):
-            for k in range(i+1, len(self.objs)):
-                if k == i+1:
+            for k in range(i + 1, len(self.objs)):
+                if k == i + 1:
                     axis = self.objs[i].position_current - self.objs[k].position_current
                     dist = Game.calDistance(axis)
                     n = axis / dist
@@ -54,7 +55,6 @@ class Link:
                     # self.objs[i].updateCenter()
                     self.objs[k].position_current -= 0.5 * delta * n
                     self.objs[k].updateCenter()
-
 
 
 class Game(arcade.Window):
