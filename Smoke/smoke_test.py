@@ -4,16 +4,17 @@ import random
 import arcade
 import numpy as np
 
-VELOCITY = 400
+VELOCITY = 800
 SIZE = 30
-ACCELERATION = 100
+ACCELERATION = 500
 
 
 class SmokeElement(arcade.SpriteSolidColor):
     def __init__(self, x, y, dest_x, dest_y):
         super(SmokeElement, self).__init__(width=SIZE, height=SIZE, color=arcade.color.WHITE)
         self.angle_tan = math.atan2(dest_y - y, dest_x - x)
-        self.velocity = np.array([VELOCITY * math.cos(self.angle_tan), VELOCITY * math.sin(self.angle_tan)],
+        self.velocity = np.array([VELOCITY*(random.randint(90, 110)/100) * math.cos(self.angle_tan),
+                                  VELOCITY*(random.randint(90, 110)/100) * math.sin(self.angle_tan)],
                                  dtype=float)
         self.center_x = x
         self.center_y = y
@@ -28,19 +29,20 @@ class SmokeElement(arcade.SpriteSolidColor):
         self.center_y = self.position_current[1]
 
     def updateVelocity(self, dt):
-        if self.velocity > 0:
+        if self.velocity[0] > 0:
             self.velocity -= self.acceleration * dt
-        if self.velocity <= 0:
-            self.velocity = 0
+        if self.velocity[0] <= random.randint(0, 600)/600:
+            self.velocity[0] = 0
+            self.velocity[1] = 0
 
     def update(self, dt=0):
-        # self.updateVelocity(dt)
-        # self.position_current += self.velocity * dt
-        # self.time -= dt
-        # self.updateCenter()
-
-        self.velocity = self.position_current - self.position_old
-        self.position_old = self.position_current
-        self.position_current = self.position_current + self.velocity + self.acceleration * dt * dt
+        self.updateVelocity(dt)
+        self.position_current += self.velocity * dt
+        self.time -= dt
         self.updateCenter()
+
+        # self.velocity = self.position_current - self.position_old
+        # self.position_old = self.position_current
+        # self.position_current = self.position_current + self.velocity + self.acceleration * dt * dt
+        # self.updateCenter()
 

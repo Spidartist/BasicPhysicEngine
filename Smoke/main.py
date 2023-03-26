@@ -4,7 +4,7 @@ import random
 import arcade
 import numpy as np
 
-from smoke_test import SmokeElement
+from smoke import SmokeElement
 
 SRC_X = 100
 SRC_Y = 400
@@ -49,7 +49,8 @@ class Game(arcade.Window):
 
 
 def main():
-    game = Game(800, 800)
+    game = Game(1200, 800)
+    arcade.schedule(game.update, 1 / 60)
     arcade.run()
 
 
